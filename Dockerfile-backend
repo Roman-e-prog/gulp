@@ -1,0 +1,22 @@
+FROM node:lts-alpine
+
+ENV NODE_ENV=production
+
+WORKDIR /usr/src/app
+
+# Copy package.json and other related files
+COPY package.json ./ package-lock.json ./
+
+RUN npm install
+
+COPY . .
+# Expose the port the app runs on
+EXPOSE 5000
+# Change ownership to non-root user for security
+RUN chown -R node /usr/src/app
+
+# Use non-root user to run the app
+USER node
+
+# Start the application
+CMD ["npm", "run", "server"]
