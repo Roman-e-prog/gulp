@@ -1,0 +1,1 @@
+import React from"react";import{screen,render}from"@testing-library/react";import Navbar from"./Navbar";describe("Test the title",()=>{it("Grep the title",()=>{render(React.createElement(Navbar,null));var e=screen.getByTestId("title");expect(e).toBeInTheDocument()})});
