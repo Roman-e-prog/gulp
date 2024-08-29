@@ -40,7 +40,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.jsx', '.js', 'scss']
+        extensions: ['.jsx', '.js', '.scss']
     },
     plugins: [
         new HTMLWebpackPlugin({
