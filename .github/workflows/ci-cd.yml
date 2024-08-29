@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      PORT: ${{ secrets.PORT }}
+      NODE_ENV: production
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
 
     steps:
     - name: Checkout code
