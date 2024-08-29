@@ -28,6 +28,11 @@ jobs:
         cd frontend
         npm install
 
+    - name: List frontend node_modules
+      run: |
+        cd frontend
+        dir node_modules
+
     - name: Build frontend
       run: |
         cd frontend
