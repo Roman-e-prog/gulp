@@ -14,14 +14,12 @@ const createTodo = async (req, res)=>{
 const updateTodo = async (req, res)=>{
     const id = req.params.id;
     const todo = req.body.todo;
-    console.log(todo)
     try{
         const result = await pool.query(
             "UPDATE todosTable SET todo=$1, updatedAt=$2 WHERE todo_id=$3", [todo,new Date(new Date().toISOString()), id]
         )
         res.status(200).json(result.rows[0])
     } catch(error){
-        console.log(error)
         res.status(404).json('Not found')
     }
 }
@@ -64,5 +62,5 @@ const todosController = {
     getTodo,
     getAllTodo
 }
-console.log(todosController)
+
 module.exports = todosController;
