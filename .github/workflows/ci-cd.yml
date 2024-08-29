@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
+
+    - name: Build backend
+      run: |
+        npm run server
+
+    - name: Build Docker images
+      run: |
+        docker build -t romanarmin/frontend:v1 -f frontend/Dockerfile .
+        docker build -t romanarmin/backend:v1 -f Dockerfile-backend .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Push Docker images
+      run: |
+        docker push romanarmin/frontend:v1
+        docker push romanarmin/backend:v1
+    # - name: Deploy with Docker Compose
+    #   run: |
+    #     echo "${{ secrets.DATABASE_PASSWORD }}" > .env
+    #     echo "${{ secrets.PORT }}" >> .env
+    #     docker-compose up -d
+    #   env:
+    #     DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+    #     PORT: ${{ secrets.PORT }}
