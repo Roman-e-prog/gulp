@@ -44,7 +44,7 @@ services:
     networks:
       - postgres-network
     volumes:
-      - ${PWD}/pgadmin-data/:/var/lib/pgadmin/
+      - ${DATABASE_PASSWORD}/pgadmin-data/:/var/lib/pgadmin/
   frontend:
     build:
       context: ./frontend
