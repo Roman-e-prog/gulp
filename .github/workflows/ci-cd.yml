@@ -18,13 +18,19 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install dependencies for frontend
+      run: |
+        cd frontend
+        npm install
 
     - name: Build frontend
       run: |
         cd frontend
         npm run build
+    
+    - name: Install dependencies for backend
+      run: |
+        npm install
 
     - name: Build backend
       run: |
