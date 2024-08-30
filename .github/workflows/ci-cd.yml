@@ -13,7 +13,16 @@ jobs:
       PORT: ${{ secrets.PORT }}
       NODE_ENV: production
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
-
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -28,9 +37,13 @@ jobs:
         npm install --include=dev
         gulp build
 
-    - name: Build backend
+    - name: Build backend and run database
       run: |
-          npm run server
+        npm run server &
+        until pg_isready -h localhost -p 5432; do
+          echo "Waiting for database connection..."
+          sleep 1
+        done
 
     - name: Install dependencies for frontend
       run: |
@@ -40,7 +53,7 @@ jobs:
     - name: List frontend node_modules
       run: |
         cd frontend
-        dir node_modules
+        ls -la node_modules
 
     - name: Build frontend
       run: |
