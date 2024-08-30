@@ -14,15 +14,23 @@ jobs:
       NODE_ENV: production
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
     services:
+      # Label used to access the service container
       postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+        # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -37,13 +45,9 @@ jobs:
         npm install --include=dev
         gulp build
 
-    - name: Build backend and run database
+    - name: Build backend
       run: |
-        npm run server &
-        until pg_isready -h localhost -p 5432; do
-          echo "Waiting for database connection..."
-          sleep 1
-        done
+          npm run server
 
     - name: Install dependencies for frontend
       run: |
@@ -53,7 +57,7 @@ jobs:
     - name: List frontend node_modules
       run: |
         cd frontend
-        ls -la node_modules
+        dir node_modules
 
     - name: Build frontend
       run: |
