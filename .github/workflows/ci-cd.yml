@@ -21,10 +21,16 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18'
+        node-version: '20'
     
-    - name: Run Gulp
-      run: gulp
+    - name: Run Gulp and backend
+      run: |
+        npm install
+        gulp
+
+    - name: Build backend
+      run: |
+          npm run server
 
     - name: Install dependencies for frontend
       run: |
@@ -40,14 +46,6 @@ jobs:
       run: |
         cd frontend
         npm run build
-    
-    - name: Install dependencies for backend
-      run: |
-        npm install
-
-    - name: Build backend
-      run: |
-        npm run server
 
     - name: Build Docker images
       run: |
