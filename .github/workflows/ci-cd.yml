@@ -11,6 +11,7 @@ jobs:
     env:
       POSTGRES_HOST: localhost
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: todo_gulp
       PORT: ${{ secrets.PORT }}
       NODE_ENV: production
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
