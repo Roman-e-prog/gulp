@@ -9,29 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      POSTGRES_HOST: localhost
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_NAME: todo_gulp
       PORT: ${{ secrets.PORT }}
       NODE_ENV: production
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          # Maps tcp port 5432 on service container to the host
-          - 5432:5432
 
     steps:
     - name: Checkout code
@@ -42,14 +23,10 @@ jobs:
       with:
         node-version: '20'
     
-    - name: Run Gulp and backend
+    - name: Run Gulp build
       run: |
         npm install --include=dev
         gulp build
-
-    - name: Build backend
-      run: |
-          npm run server
 
     - name: Install dependencies for frontend
       run: |
@@ -78,11 +55,3 @@ jobs:
       run: |
         docker push romanarmin/frontend:v1
         docker push romanarmin/backend:v1
-    # - name: Deploy with Docker Compose
-    #   run: |
-    #     echo "${{ secrets.DATABASE_PASSWORD }}" > .env
-    #     echo "${{ secrets.PORT }}" >> .env
-    #     docker-compose up -d
-    #   env:
-    #     DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-    #     PORT: ${{ secrets.PORT }}
