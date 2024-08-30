@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      POSTGRES_HOST: localhost
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       PORT: ${{ secrets.PORT }}
       NODE_ENV: production
