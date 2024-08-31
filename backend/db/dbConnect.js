@@ -4,7 +4,7 @@ dotenv.config();
 
 const pool = new Pool({
     user: 'postgres',
-    host: '127.0.0.1',
+    host: process.env.DB_HOST || 'postgres', //for docker not the localhost but the the servicename
     database: 'todo_gulp',
     password: process.env.DATABASE_PASSWORD,
     port: process.env.PORT
