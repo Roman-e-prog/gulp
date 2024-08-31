@@ -3,14 +3,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-backend
-    command: ["npm","run", "server"]
+    command: ["npm", "run", "server"]
     environment:
       - PORT=5432
       - SERVER_PORT=5000
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - NODE_ENV="production"
     ports:
-      - 5000:5000
+      - "5000:5000"
     depends_on:
       - pgadmin
     networks:
@@ -21,22 +21,23 @@ services:
         limits:
           cpus: '0.50'
           memory: 0.8G
+
   postgres:
     image: 'postgres'
     ports:
-      - 15432:5432
+      - "5432:5432"
     env_file:
       - .env
     networks:
       - postgres-network
     volumes:
-      - ${PWD}/db-data/:/var/lib/postgresql/data/
-      - ${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db-data/:/var/lib/postgresql/data/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - 15433:80
+      - "15433:80"
     env_file:
       - .env
     depends_on:
@@ -44,7 +45,8 @@ services:
     networks:
       - postgres-network
     volumes:
-      - ${PWD}/pgadmin-data/:/var/lib/pgadmin/
+      - ./pgadmin-data/:/var/lib/pgadmin/
+
   frontend:
     build:
       context: ./frontend
@@ -56,7 +58,7 @@ services:
     depends_on:
       - backend
     ports:
-      - 3000:3000
+      - "3000:3000"
     deploy:
       resources:
         limits:
