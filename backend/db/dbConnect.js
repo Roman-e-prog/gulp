@@ -4,7 +4,7 @@ dotenv.config();
 
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: '127.0.0.1',
     database: 'todo_gulp',
     password: process.env.DATABASE_PASSWORD,
     port: process.env.PORT
