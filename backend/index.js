@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const createTodosTable = require('./tables/todos');
 const todosRouter = require('./router/todosRouter');
-const path = require('path');
 dotenv.config();
 
 const app = express();

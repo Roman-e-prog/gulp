@@ -5,9 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import Edit from '../edit/Edit';
 import { useTodos } from '../context';
-afterEach(() => {
-    jest.restoreAllMocks();
-  });
+
 const Output = () => {
     const { todos, setTodos } = useTodos();
     const [loading, setLoading] = useState(true);

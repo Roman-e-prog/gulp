@@ -1,5 +1,5 @@
 const pool = require('../db/dbConnect')
-console.log(pool, 'log the connection')
+
 const createTodo = async (req, res)=>{
     const todo = req.body.todo;
     try{
