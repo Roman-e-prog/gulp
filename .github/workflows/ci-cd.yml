@@ -39,12 +39,16 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '20'
-    
+    - name: Wait for PostgreSQL to be ready
+      run: |
+          until pg_isready -h localhost -p 5432; do
+          echo "Waiting for PostgreSQL..."
+          sleep 5
+          done
     - name: Run Gulp build
       run: |
         npm install --include=dev
-        gulp frontend-build
-        gulp backend-build
+        gulp 
 
     - name: List node_modules
       run: |
