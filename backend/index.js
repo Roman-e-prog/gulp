@@ -8,14 +8,16 @@ dotenv.config();
 
 const app = express();
 const port = process.env.SERVER_PORT;
-
+console.log(port);
+console.log(process.env.NODE_ENV, 'here environment')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 createTodosTable();
 app.use('/api/todos', todosRouter);
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'dist')));
+    console.log('Running in production mode');
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
 } else{
     console.log('Please set the NODE_ENV to production')
 }
