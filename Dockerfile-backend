@@ -1,22 +1,36 @@
 FROM node:lts-alpine
 
-ENV NODE_ENV=production
+# Install dependencies
+RUN apk add --no-cache postgresql-client
 
 WORKDIR /usr/src/app
 
-# Copy package.json and other related files
-COPY package.json ./ package-lock.json ./
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
 
-RUN npm install
+# Set npm registry and increase timeout
+# RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set fetch-timeout 600000
 
+# Install dependencies
+RUN npm install --loglevel=error
+
+# Copy the entire project
 COPY . .
+
+# Set Node Env to production
+ENV NODE_ENV=production
+
 # Expose the port the app runs on
 EXPOSE 5000
+
 # Change ownership to non-root user for security
+RUN npm install -g gulp-cli # Install Gulp globally
+RUN npm install -g gulp
 RUN chown -R node /usr/src/app
 
 # Use non-root user to run the app
 USER node
 
 # Start the application
-CMD ["npm", "run", "server"]
+CMD ["npm","run", "backend-build"]
