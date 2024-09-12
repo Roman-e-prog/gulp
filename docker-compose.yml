@@ -32,8 +32,8 @@ services:
     restart: always
     ports:
       - "5432:5432"
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
       - PORT=5432
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
