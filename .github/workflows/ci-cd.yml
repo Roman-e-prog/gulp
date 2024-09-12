@@ -8,14 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      PORT: ${{ secrets.PORT }}
-      NODE_ENV: production
-      SERVER_PORT: ${{ secrets.SERVER_PORT }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_NAME: ${{ secrets.DB_NAME }}
+    container: node:20  # Use a Node.js container for the job
     services:
       postgres:
         image: postgres
@@ -35,14 +28,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-
     - name: Install dependencies
       run: npm install --include=dev
-        
+
     - name: Wait for PostgreSQL to be ready
       run: |
           echo "Waiting for PostgreSQL to be ready..."
@@ -51,10 +39,6 @@ jobs:
             echo "Waiting for PostgreSQL..."
             sleep 30  # Increase the wait time between checks
           done
-
-    # - name: Create postgres user
-    #   run: |
-    #     psql -h ${{ secrets.DB_HOST }} -d $${POSTGRES_DB} -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
 
     - name: Run Gulp build
       env:
@@ -65,24 +49,21 @@ jobs:
           PORT: 5432
       run: gulp
 
-    - name: List node_modules
-      run: ls node_modules
-
-    - name: Set up Docker Compose
-      run: docker-compose -f docker-compose.yml up -d
-
     - name: Build Docker images
       run: |
-        docker build -t gulp-frontend-1 romanarmin/gulpApp-frontend:v1 .
-        docker build -t gulp-backend-1 romanarmin/gulpApp-backend:v1 .
-
+            docker build -t gulp-frontend-1 romanarmin/gulpApp-frontend:v1 .
+            docker build -t gulp-backend-1 romanarmin/gulpApp-backend:v1 .  
+    
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Push Docker images
       run: |
-        docker push romanarmin/gulpApp-frontend:v1
-        docker push romanarmin/gulpApp-backend:v1
+          docker push romanarmin/gulpApp-frontend:v1
+          docker push romanarmin/gulpApp-backend:v1
+
+    - name: List node_modules
+      run: ls node_modules
 
     - name: Test the App
       run: npm run test
