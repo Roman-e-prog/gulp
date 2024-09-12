@@ -63,8 +63,8 @@ services:
     image: dpage/pgadmin4
     ports:
       - "15433:80"
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
       - PGADMIN_DEFAULT_EMAIL=roman.rostock@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=${DATABASE_PASSWORD}
