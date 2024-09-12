@@ -1,15 +1,20 @@
+# Build Stage
 FROM node:lts-alpine as build
-ENV NODE_ENV=production
 WORKDIR /app
-# Copy package.json and other related files
-COPY package.json ./ package-lock.json ./
-RUN npm install --production --silent && mv node_modules ../
-COPY . .
-RUN npm run build
-EXPOSE 3000
 
-# Production stage
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install --silent
+
+# Copy the entire project
+COPY . .
+# Run the Gulp tasks
+RUN npm install -g gulp-cli
+RUN gulp frontend-build
+# Production Stage
 FROM nginx:stable-alpine as production
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/frontend/build /usr/share/nginx/html
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
