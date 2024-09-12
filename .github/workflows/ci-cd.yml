@@ -47,7 +47,7 @@ jobs:
           DB_HOST: postgres
           DB_NAME: ${{ secrets.DB_NAME }}
           PORT: 5432
-      run: gulp
+      run: npx gulp
 
     - name: Build Docker images
       run: |
