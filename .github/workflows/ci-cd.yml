@@ -39,6 +39,8 @@ jobs:
     #         echo "Waiting for PostgreSQL..."
     #         sleep 30  # Increase the wait time between checks
     #       done
+    - name: Print environment variables
+      run: printenv | grep DB_
 
     - name: Run Gulp build
       env:
