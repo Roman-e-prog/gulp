@@ -45,6 +45,10 @@ jobs:
     - name: Install dependencies
       run: npm install --include=dev
 
+    - name: Create postgres user
+      run: |
+          psql -U postgres -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD ${{ secrets.DATABASE_PASSWORD }};"
+
     - name: Wait for PostgreSQL to be ready
       run: |
           until pg_isready -h localhost -p 5432; do
