@@ -31,14 +31,14 @@ jobs:
     - name: Install dependencies
       run: npm install --include=dev
 
-    - name: Wait for PostgreSQL to be ready
-      run: |
-          echo "Waiting for PostgreSQL to be ready..."
-          sleep 60  # Add a sleep command to give PostgreSQL extra time
-          until pg_isready -h postgres -d $${POSTGRES_DB} -p 5432; do
-            echo "Waiting for PostgreSQL..."
-            sleep 30  # Increase the wait time between checks
-          done
+    # - name: Wait for PostgreSQL to be ready
+    #   run: |
+    #       echo "Waiting for PostgreSQL to be ready..."
+    #       sleep 60  # Add a sleep command to give PostgreSQL extra time
+    #       until pg_isready -h postgres -d $${POSTGRES_DB} -p 5432; do
+    #         echo "Waiting for PostgreSQL..."
+    #         sleep 30  # Increase the wait time between checks
+    #       done
 
     - name: Run Gulp build
       env:
