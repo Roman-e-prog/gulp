@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-backend
-    command: ["npm", "run", "server"]
+    command: ["npm","run", "backend-build"]
     environment:
       - PORT=5432
       - SERVER_PORT=5000
@@ -11,30 +11,52 @@ services:
       - DB_HOST=postgres
       - DB_PORT=5432
       - NODE_ENV="production"
+    restart: always
     ports:
       - "5000:5000"
     depends_on:
       - pgadmin
+      - postgres
     networks:
       - private
       - public
+      - customnetwork
     deploy:
       resources: 
         limits:
           cpus: '0.50'
-          memory: 0.8G
+          memory: 1.2G
 
   postgres:
     image: 'postgres'
+    restart: always
     ports:
       - "5432:5432"
     env_file:
       - .env
+    environment:
+      - PORT=5432
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - NODE_ENV="production"
+      - POSTGRES_DB=todo_gulp
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     networks:
-      - postgres-network
+      customnetwork:
+        ipv4_address: 172.20.0.10
     volumes:
       - ./db-data/:/var/lib/postgresql/data/
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '1.2G'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
   
   pgadmin:
     image: dpage/pgadmin4
@@ -42,33 +64,39 @@ services:
       - "15433:80"
     env_file:
       - .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=roman.rostock@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=${DATABASE_PASSWORD}
     depends_on:
       - postgres
     networks:
-      - postgres-network
-    volumes:
-      - ./pgadmin-data/:/var/lib/pgadmin/
+      customnetwork:
+        ipv4_address: 172.20.0.11
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./frontend/Dockerfile
     networks:
       - public
-    volumes:
-      - frontend_node_modules:/node_modules
     depends_on:
       - backend
+    volumes:
+      - ./build:/app/build
+    restart: always
     ports:
       - "3000:3000"
     deploy:
       resources:
         limits:
           cpus: '0.50'
-          memory: '0.8G'
+          memory: '1.2G'
 
 networks: 
-  postgres-network:
+  customnetwork:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
   private: {}
   public: {}
