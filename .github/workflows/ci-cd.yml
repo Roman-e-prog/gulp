@@ -46,7 +46,7 @@ jobs:
       run: |
           until pg_isready -h localhost -p 5432; do
           echo "Waiting for PostgreSQL..."
-          sleep 5
+          sleep 20
           done
     - name: Run Gulp build
       run: |
