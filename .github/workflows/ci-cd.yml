@@ -50,9 +50,9 @@ jobs:
             sleep 20
           done
 
-    - name: Create postgres user
-      run: |
-        psql -h ${{ secrets.DB_HOST }} -d $${POSTGRES_DB} -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
+    # - name: Create postgres user
+    #   run: |
+    #     psql -h ${{ secrets.DB_HOST }} -d $${POSTGRES_DB} -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
 
     - name: Run Gulp build
       env:
