@@ -40,7 +40,7 @@ jobs:
     #         sleep 30  # Increase the wait time between checks
     #       done
     - name: Print environment variables
-      run: printenv | grep DB_
+      run: printenv
 
     - name: Run Gulp build
       env:
