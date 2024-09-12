@@ -11,7 +11,7 @@ describe('test the textbox', ()=>{
         </TodoProvider>
         )
         const editInput = screen.getByRole('textbox', {
-            nmae:/Edit Todo/i
+            name:/Edit Todo/i
         })
         expect(editInput).toBeInTheDocument();
     })
