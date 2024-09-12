@@ -39,6 +39,9 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '20'
+    - name: Install dependencys
+      run: |
+          npm install --include=dev
     - name: Wait for PostgreSQL to be ready
       run: |
           until pg_isready -h localhost -p 5432; do
@@ -47,7 +50,6 @@ jobs:
           done
     - name: Run Gulp build
       run: |
-        npm install --include=dev
         gulp 
 
     - name: List node_modules
