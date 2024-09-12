@@ -52,7 +52,7 @@ jobs:
 
     - name: Create postgres user
       run: |
-        psql -h localhost -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
+        psql -h ${{ secrets.DB_HOST }} -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
 
     - name: Run Gulp build
       env:
@@ -68,8 +68,8 @@ jobs:
 
     - name: Build Docker images
       run: |
-        docker build -t romanarmin/gulpApp-frontend:v1 .
-        docker build -t romanarmin/gulpApp-backend:v1 .
+        docker build -t gulp-frontend-1 romanarmin/gulpApp-frontend:v1 .
+        docker build -t gulp-backend-1 romanarmin/gulpApp-backend:v1 .
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
