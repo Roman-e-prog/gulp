@@ -13,6 +13,8 @@ jobs:
       PORT: ${{ secrets.PORT }}
       NODE_ENV: production
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
     services:
       # Label used to access the service container
       postgres:
