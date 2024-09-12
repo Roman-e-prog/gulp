@@ -43,7 +43,7 @@ jobs:
     - name: Run Gulp build
       env:
           DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DB_PASSWORD: echo ${{ secrets.DATABASE_PASSWORD }}
           DB_HOST: postgres
           DB_NAME: ${{ secrets.DB_NAME }}
           PORT: 5432
