@@ -52,7 +52,7 @@ jobs:
 
     - name: Create postgres user
       run: |
-        psql -h postgres -d todo_gulp -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
+        psql -h $${POSTGRES_USER} -d $${POSTGRES_DB} -p 5432 -U $${POSTGRES_USER} -c "CREATE ROLE $${POSTGRES_USER} WITH LOGIN PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
 
     - name: Run Gulp build
       env:
