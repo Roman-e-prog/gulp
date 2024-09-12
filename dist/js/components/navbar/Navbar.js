@@ -1,1 +1,0 @@
-import React from"react";import*as styles from"./navbar.module.scss";let Navbar=()=>React.createElement("div",{className:styles.container},React.createElement("h1",{className:styles.title,"data-testid":"title"},"Short test of Gulp with Webpack"));export default Navbar;

@@ -1,1 +1,0 @@
-import React from"react";import{screen,render}from"@testing-library/react";import Entry from"./Entry";import{TodoProvider}from"../context";describe("Test the entry",()=>{it("Test the input",()=>{render(React.createElement(TodoProvider,null,React.createElement(Entry,null)));var e=screen.getByRole("textbox",{name:/Eingabe Todo/i});expect(e).toBeInTheDocument()})});

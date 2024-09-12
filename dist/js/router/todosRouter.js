@@ -1,1 +1,0 @@
-let todosRouter=require("express").Router(),todosController=require("../controller/todosController"),{createTodo,updateTodo,deleteTodo,getTodo,getAllTodo}=todosController;todosRouter.post("/",createTodo),todosRouter.put("/:id",updateTodo),todosRouter.delete("/:id",deleteTodo),todosRouter.get("/find/:id",getTodo),todosRouter.get("/find/",getAllTodo),module.exports=todosRouter;
