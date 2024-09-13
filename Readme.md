@@ -225,5 +225,12 @@ module.exports = scripts;
 npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-react @pmmmwh/react-refresh-webpack-plugin css-loader html-webpack-plugin node-sass sass-loader style-loader webpack webpack-cli webpack-dev-server webpack-merge
 
 
+docker exec -it gulp-backend-1 bash
+cat /var/lib/postgresql/data/pg_hba.conf
+
+docker exec -it gulp-postgres-1 bash
+psql -U postgres
+ALTER USER postgres WITH PASSWORD 'HOBBES14pebbles13_1a';
+
 
 

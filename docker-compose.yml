@@ -45,7 +45,7 @@ services:
       - POSTGRES_USER=postgres
     networks:
       customnetwork:
-        ipv4_address: 172.20.0.10
+        ipv4_address: 172.21.0.10
     volumes:
       - ./db-data/:/var/lib/postgresql/data/
     deploy:
@@ -72,7 +72,7 @@ services:
       - postgres
     networks:
       customnetwork:
-        ipv4_address: 172.20.0.11
+        ipv4_address: 172.21.0.11
 
   frontend:
     build:
@@ -98,6 +98,6 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.21.0.0/16
   private: {}
   public: {}
