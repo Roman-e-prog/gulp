@@ -61,7 +61,7 @@ gulp.task('nodemon', function(done) {
     nodemon({
       script: 'backend/index.js',
       ext: 'js',
-      env: { 'NODE_ENV': 'production', 'DB_USER': process.env.DB_USER, 'DB_PASSWORD': process.env.DATABASE_PASSWORD, 'DB_HOST': process.env.DB_HOST }, 
+      env: { 'NODE_ENV': 'production', 'DB_PASSWORD': process.env.DATABASE_PASSWORD, 'DB_USER': process.env.DB_USER, 'DB_HOST': process.env.DB_HOST }, 
       done: done
     });
 });
