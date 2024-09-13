@@ -49,7 +49,6 @@ jobs:
           PORT: 5432
           SERVER_PORT: 5000
       run: |
-          echo "${{secrets.DATABASE_PASSWORD}}"
           npx gulp
 
     - name: Build Docker images
