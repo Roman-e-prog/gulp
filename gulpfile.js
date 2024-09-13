@@ -15,15 +15,12 @@ const useref = require('gulp-useref');
 const dotenv = require('dotenv');
 const backendscripts = require('./gulp-tasks/backendscripts');
 dotenv.config();
+
 gulp.task('log', function(done) {
     console.log('Gulp is running');
     done();
 });
-// gulp.task('clean', () => {
-//     console.log('Running clean task');
-//     return gulp.src('frontend/build', { allowEmpty: true })
-//         .pipe(clean());
-// });
+
 gulp.task('backendscripts', backendscripts);
 gulp.task('styles', styles);
 gulp.task('scripts', scripts);
@@ -37,13 +34,14 @@ gulp.task('update-import-paths', () => {
           console.log(`Processed file: ${file.path}`);
       });
 });
+
 gulp.task('move-html', function() {
     return gulp.src('frontend/public/*.html')
       .pipe(useref())
       .pipe(htmlmin({ collapseWhitespace: true }))
       .pipe(rename('index.html'))
       .pipe(gulp.dest('frontend/build/'));
-  });
+});
 
 gulp.task('test', () => {
     console.log('Running test task');
@@ -57,13 +55,16 @@ gulp.task('test', () => {
 });
 
 gulp.task('nodemon', function(done) {
+    console.log('DB_USER:', process.env.DB_USER);
+    console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+    console.log('DB_HOST:', process.env.DB_HOST);
     nodemon({
       script: 'backend/index.js',
       ext: 'js',
-      env: { 'NODE_ENV': 'production', 'DB_USER': 'postgres' , 'DB_HOST': 'postgres' }, 
+      env: { 'NODE_ENV': 'production', 'DB_USER': process.env.DB_USER, 'DB_PASSWORD': process.env.DATABASE_PASSWORD, 'DB_HOST': process.env.DB_HOST }, 
       done: done
     });
-  });
+});
 
 gulp.task('webpack', async function (done) {
     const debug = (await import('gulp-debug')).default;
@@ -74,23 +75,10 @@ gulp.task('webpack', async function (done) {
         .on('end', done);
 });
 
-
-// gulp.task('all-js', function () {
-//     return gulp.src(['./*.js', '!./node_modules/**', '!./gulpfile.js'])
-//         .pipe(gulp.dest('dist/'));
-// });
-// gulp.task('lint', () => {
-//     return gulp.src('dist/js/**/*.js') 
-//         .pipe(eslint())
-//         .pipe(eslint.format())
-//         .pipe(eslint.failAfterError());
-// });
-
 gulp.task('watch', function() {
     gulp.watch('frontend/src/**/*.scss', gulp.series('styles'));
     gulp.watch('frontend/src/**/*.jsx', gulp.series('scripts'));
     gulp.watch('backend/**/*.js', gulp.series('backendscripts'));
-    // gulp.watch(['./*.js', '!./node_modules/**', '!./gulpfile.js'], gulp.series('all-js'));
 });
 
 gulp.task('frontend-build', gulp.series('styles', 'scripts', 'webpack', 'update-import-paths', 'move-html', 'test'));
