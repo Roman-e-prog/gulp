@@ -39,8 +39,6 @@ jobs:
     #         echo "Waiting for PostgreSQL..."
     #         sleep 30  # Increase the wait time between checks
     #       done
-    - name: Print environment variables
-      run: printenv
 
     - name: Run Gulp build
       env:
@@ -50,7 +48,9 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           PORT: 5432
           SERVER_PORT: 5000
-      run: npx gulp
+      run: |
+          echo "My_secret=${{secrets.DATABASE_PASSWORD}}"
+          npx gulp
 
     - name: Build Docker images
       run: |
