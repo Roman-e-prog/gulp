@@ -39,6 +39,8 @@ jobs:
     #         echo "Waiting for PostgreSQL..."
     #         sleep 30  # Increase the wait time between checks
     #       done
+    - name: Check PostgreSQL status
+      run: pg_isready -h postgres -d ${{ secrets.POSTGRES_DB }} -U ${{ secrets.POSTGRES_USER }}
 
     - name: Run Gulp build
       env:
