@@ -78,7 +78,13 @@ gulp.task('watch', function() {
     gulp.watch('backend/**/*.js', gulp.series('backendscripts'));
 });
 
-gulp.task('frontend-build', gulp.series('styles', 'scripts', 'webpack', 'update-import-paths', 'move-html', 'test'));
-gulp.task('backend-build', gulp.series('log', 'backendscripts', 'nodemon'));
+gulp.task('frontend-build', gulp.series('styles', 'scripts', 'webpack', 'update-import-paths', 'move-html', 'test', function(done) {
+    console.log('Frontend build completed');
+    done();
+  }));
+gulp.task('backend-build', gulp.series('log', 'backendscripts', 'nodemon', function(done) {
+    console.log('Backend build completed');
+    done();
+  }));
 
 gulp.task('default', gulp.series('frontend-build', 'backend-build', 'watch'));
