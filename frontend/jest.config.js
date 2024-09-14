@@ -17,7 +17,7 @@ const config = {
       // for test files in the build folder
       testMatch: ['<rootDir>/build/**/*.test.js'],
       //using testRegex
-      testRegex: '(/build/.*|(\\.|/)(test|spec))\\.jsx?$',
+    //   testRegex: '(/build/.*|(\\.|/)(test|spec))\\.jsx?$',
 };
 
 module.exports = config;
