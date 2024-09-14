@@ -57,7 +57,13 @@ jobs:
 
     - name: Install Docker Compose
       run: apt-get update && apt-get install -y docker-compose
-     
+    
+    - name: Stop and remove existing containers
+      run: |
+        docker-compose down
+        docker ps -q --filter "name=gulp_" | xargs -r docker stop
+        docker ps -a -q --filter "name=gulp_" | xargs -r docker rm
+        
     - name: Build and start services
       run: 
         docker-compose up --build -d
