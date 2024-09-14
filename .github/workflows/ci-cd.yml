@@ -59,7 +59,9 @@ jobs:
       run: apt-get update && apt-get install -y docker-compose
      
     - name: Build and start services
-      run: docker-compose up --build -d
+      run: 
+        docker-compose down
+        docker-compose up --build -d
 
     - name: Build Docker images
       run: |
