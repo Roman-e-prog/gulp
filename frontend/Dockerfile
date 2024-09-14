@@ -18,6 +18,9 @@ COPY frontend/src/setupTests.js ./src/
 # Run the Gulp tasks
 RUN npm install -g gulp-cli
 RUN gulp frontend-build
+# List files to verify structure
+RUN ls -R /app/build/js
+
 #run tests
 RUN npm run test
 # Production Stage
