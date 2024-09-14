@@ -232,5 +232,29 @@ docker exec -it gulp-postgres-1 bash
 psql -U postgres
 ALTER USER postgres WITH PASSWORD 'HOBBES14pebbles13_1a';
 
+ # - name: Install PostgreSQL Client
+    #   run: apt-get update && apt-get install -y postgresql-client
+
+    # - name: Wait for PostgreSQL to be ready
+    #   run: |
+    #       echo "Waiting for PostgreSQL to be ready..."
+    #       sleep 60  # Add a sleep command to give PostgreSQL extra time
+    #       until pg_isready -h postgres -d $${POSTGRES_DB} -U $${POSTGRES_USER}; do
+    #         echo "Waiting for PostgreSQL..."
+    #         sleep 30  # Increase the wait time between checks
+    #       done
+
+    # - name: Run Gulp build
+    #   env:
+    #       DB_USER: ${{ secrets.DB_USER }}
+    #       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    #       DB_HOST: postgres
+    #       DB_NAME: ${{ secrets.DB_NAME }}
+    #       PORT: 5432
+    #       SERVER_PORT: 5000
+    #   run: |
+    #        npx gulp frontend-build
+    #        npx gulp backend-build
+
 
 
