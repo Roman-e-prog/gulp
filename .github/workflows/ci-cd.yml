@@ -50,8 +50,8 @@ jobs:
 
     - name: Push Docker images
       run: |
-          docker push romanarmin/gulpApp-frontend:v1
-          docker push romanarmin/gulpApp-backend:v1
+          docker push romanarmin/gulpapp-frontend:v1
+          docker push romanarmin/gulpapp-backend:v1
 
     - name: List node_modules
       run: ls node_modules
