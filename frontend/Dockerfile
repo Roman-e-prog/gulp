@@ -14,13 +14,13 @@ COPY . .
 COPY frontend/babel.config.js ./
 COPY frontend/jest.config.js ./
 COPY frontend/src/setupTests.js ./src/
-
+RUN ls -R /app
+#run tests
+RUN npm run test
 # Run the Gulp tasks
 RUN npm install -g gulp-cli
 RUN gulp frontend-build
 
-#run tests
-RUN npm run test
 # Production Stage
 FROM nginx:stable-alpine as production
 COPY --from=build /app/frontend/build /usr/share/nginx/html
