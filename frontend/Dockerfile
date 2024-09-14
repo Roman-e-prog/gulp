@@ -11,8 +11,8 @@ RUN npm install --silent
 # Copy the entire project
 COPY . .
 # Copy Babel and Jest configuration files
-COPY babel.config.js ./
-COPY jest.config.js ./
+COPY frontend/babel.config.js ./
+COPY frontend/jest.config.js ./
 # Run the Gulp tasks
 RUN npm install -g gulp-cli
 RUN gulp frontend-build
