@@ -63,7 +63,10 @@ jobs:
         docker-compose down
         docker ps -q --filter "name=gulp_" | xargs -r docker stop
         docker ps -a -q --filter "name=gulp_" | xargs -r docker rm
-        
+
+    - name: list running containers
+      run: docker ps -a   
+      
     - name: Build and start services
       run: 
         docker-compose up --build -d
