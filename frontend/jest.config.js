@@ -15,7 +15,7 @@ const config = {
       moduleFileExtensions: ['js', 'mjs', 'jsx'],
       clearMocks: true,
       // for test files in the build folder
-      testMatch: ['<rootDir>/build/**/*.test.js'],
+      testMatch: ['<rootDir>/build/js/**/*.test.js'],
       //using testRegex
     //   testRegex: '(/build/.*|(\\.|/)(test|spec))\\.jsx?$',
 };
