@@ -65,8 +65,8 @@ jobs:
 
     - name: Build Docker images
       run: |
-            docker tag gulp-frontend-1 romanarmin/gulpApp-frontend:v1 .
-            docker tag gulp-backend-1 romanarmin/gulpApp-backend:v1 .  
+            docker tag gulp-frontend-1 romanarmin/gulpApp-frontend:v1 
+            docker tag gulp-backend-1 romanarmin/gulpApp-backend:v1   
     
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -81,3 +81,7 @@ jobs:
 
     - name: Test the App
       run: npm run test
+
+    - name: Cleanup
+      if: always()
+      run: docker-compose down
