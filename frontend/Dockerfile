@@ -13,6 +13,8 @@ COPY . .
 # Copy Babel and Jest configuration files
 COPY frontend/babel.config.js ./
 COPY frontend/jest.config.js ./
+#run tests
+RUN npm run test
 # Run the Gulp tasks
 RUN npm install -g gulp-cli
 RUN gulp frontend-build

@@ -53,9 +53,6 @@ jobs:
           docker push romanarmin/gulpapp-frontend:v1
           docker push romanarmin/gulpapp-backend:v1
 
-    - name: List node_modules
-      run: ls node_modules
-
     - name: Test the App
       run: npm run test
 
