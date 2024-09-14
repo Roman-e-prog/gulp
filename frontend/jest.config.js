@@ -13,7 +13,7 @@ const config = {
     collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
     moduleFileExtensions: ['js', 'mjs', 'jsx'],
     clearMocks: true,
-    testMatch: ['<rootDir>/src/**/*.test.js'], // Use source directory
+    testMatch: ['<rootDir>/frontend/src/**/*.test.js'], // Use source directory
     transformIgnorePatterns: [
         "/node_modules/"
     ],
