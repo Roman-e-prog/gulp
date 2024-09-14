@@ -52,7 +52,8 @@ jobs:
           PORT: 5432
           SERVER_PORT: 5000
       run: |
-          npx gulp
+           gulp frontend-build
+           gulp backend-build
 
     - name: Build Docker images
       run: |
