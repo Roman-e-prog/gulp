@@ -53,9 +53,6 @@ jobs:
           docker push romanarmin/gulpapp-frontend:v1
           docker push romanarmin/gulpapp-backend:v1
 
-    - name: Test the App
-      run: npm run test
-
     - name: Cleanup
       if: always()
       run: docker-compose down

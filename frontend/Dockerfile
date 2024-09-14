@@ -14,7 +14,6 @@ COPY . .
 COPY frontend/babel.config.js ./
 COPY frontend/jest.config.js ./
 COPY frontend/src/setupTests.js ./src/
-RUN ls -R /app
 #run tests
 RUN npm run test
 # Run the Gulp tasks
