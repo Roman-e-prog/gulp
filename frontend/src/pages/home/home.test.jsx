@@ -1,6 +1,6 @@
 import React from 'react';
 import {screen, render} from '@testing-library/react'
-import Home from './home'
+import Home from './Home'
 import { TodoProvider } from '../../components/context';
 describe('EntryContainer is in the document', ()=>{
     it('Grep EntryContainer', ()=>{
