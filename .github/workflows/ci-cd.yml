@@ -60,7 +60,6 @@ jobs:
      
     - name: Build and start services
       run: 
-        docker-compose down
         docker-compose up --build -d
 
     - name: Build Docker images
