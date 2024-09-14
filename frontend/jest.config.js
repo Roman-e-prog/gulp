@@ -14,10 +14,10 @@ const config = {
       collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
       moduleFileExtensions: ['js', 'mjs', 'jsx'],
       clearMocks: true,
-      // for test files in the dist folder
-      testMatch: ['<rootDir>/dist/**/*.test.js'],
+      // for test files in the build folder
+      testMatch: ['<rootDir>/build/**/*.test.js'],
       //using testRegex
-      testRegex: '(/dist/.*|(\\.|/)(test|spec))\\.jsx?$',
+      testRegex: '(/build/.*|(\\.|/)(test|spec))\\.jsx?$',
 };
 
 module.exports = config;
