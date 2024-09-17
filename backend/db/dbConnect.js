@@ -5,8 +5,8 @@ dotenv.config();
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST, //for docker not the localhost but the the servicename
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
+    database: 'todo_gulp',
+    password: process.env.DATABASE_PASSWORD,
     port: process.env.PORT
 });
 
