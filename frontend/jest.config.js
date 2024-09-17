@@ -14,7 +14,7 @@ const config = {
       collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
       moduleFileExtensions: ['js', 'mjs', 'jsx'],
       clearMocks: true,
-      testMatch: ['<rootDir>/frontend/src/**/*.test.jsx'],
+      testMatch: ['<rootDir>/src/**/*.test.jsx'],
       testPathIgnorePatterns: ['/node_modules/', '/playwrightTests/', '/test-results/', 'playwright-report'],
       modulePathIgnorePatterns: ['<rootDir>/playwrightTests/.*\\.spec\\.js$'], 
 };
