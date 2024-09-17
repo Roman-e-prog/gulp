@@ -57,13 +57,14 @@ gulp.task('test', () => {
 		}));
 });
 gulp.task('test:playwright', (done) => {
-	console.log('running playwright tests')
-	exec('npx playwright test', (err, stdout, stderr) => {
+	console.log('running playwright tests');
+	exec('DEBUG=pw:api npx playwright test', (err, stdout, stderr) => {
 	  console.log(stdout);
 	  console.error(stderr);
 	  done(err);
 	});
   });
+  
 gulp.task('nodemon', function(done) {
 	nodemon({
 	  script: 'backend/index.js',
