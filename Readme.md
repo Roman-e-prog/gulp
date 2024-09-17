@@ -257,4 +257,89 @@ ALTER USER postgres WITH PASSWORD 'HOBBES14pebbles13_1a';
     #        npx gulp backend-build
 
 
+    Playwright
+    installed the extension
+    in the control panel entered playwright and chosen "test: intall playwright" It installs me following files in the root:
+    tests
+    tests-examples
+    playwright.config.ts //typescript is default otherwise I must choose js in the prompt.
+    in .github/workflows I get a playwright.yml
 
+    In the console I get this options:
+    Inside that directory, you can run several commands:
+
+  npx playwright test
+    Runs the end-to-end tests.
+
+  npx playwright test --ui
+    Starts the interactive UI mode.
+
+  npx playwright test --project=chromium
+    Runs the tests only on Desktop Chrome.
+
+  npx playwright test example
+    Runs the tests in a specific file.
+
+  npx playwright test --debug
+    Runs the tests in debug mode.
+
+  npx playwright codegen
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+    npx playwright test
+
+And check out the following files:
+  - .\tests\example.spec.ts - Example end-to-end test
+  - .\tests-examples\demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+  - .\playwright.config.ts - Playwright Test configuration
+
+Visit https://playwright.dev/docs/intro for more information. ✨
+
+Happy hacking! 🎭
+
+When I click on the test icon in the sidebar it opens we a plywright section at the bottom.
+
+example workflow for playwright when running in development modus:
+
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: |
+          if [ "$NODE_ENV" == "development" ]; then
+            npx playwright test
+          fi
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+clear vs code cache
+Windows: Navigate to C:\Users\<YourUsername>\AppData\Roaming\Code\Cache and C:\Users\<YourUsername>\AppData\Roaming\Code\CachedData. Delete the contents of these folders.
+
+Clear editor and search history
