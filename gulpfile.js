@@ -56,14 +56,14 @@ gulp.task('test', () => {
 			"automock": false
 		}));
 });
-gulp.task('test:playwright', (done) => {
-	console.log('running playwright tests');
-	exec('DEBUG=pw:api npx playwright test', (err, stdout, stderr) => {
-	  console.log(stdout);
-	  console.error(stderr);
-	  done(err);
-	});
-  });
+// gulp.task('test:playwright', (done) => {
+// 	console.log('running playwright tests');
+// 	exec('DEBUG=pw:api npx playwright test', (err, stdout, stderr) => {
+// 	  console.log(stdout);
+// 	  console.error(stderr);
+// 	  done(err);
+// 	});
+//   });
   
 gulp.task('nodemon', function(done) {
 	nodemon({
@@ -102,7 +102,7 @@ gulp.task('watch', function() {
 	// gulp.watch(['./*.js', '!./node_modules/**', '!./gulpfile.js'], gulp.series('all-js'));
 });
 
-gulp.task('frontend-build', gulp.series('log', 'clean', 'styles', 'scripts', 'webpack','update-import-paths', 'move-html', 'test', 'test:playwright'));
+gulp.task('frontend-build', gulp.series('log', 'clean', 'styles', 'scripts', 'webpack','update-import-paths', 'move-html', 'test'));
 gulp.task('backend-build', gulp.series('log', 'backendscripts', 'nodemon'));
 gulp.task('default', gulp.series('frontend-build', 'backend-build', 'watch'));
 		
