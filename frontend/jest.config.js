@@ -16,7 +16,7 @@ const config = {
       clearMocks: true,
       testMatch: ['<rootDir>/frontend/src/**/*.test.jsx'],
       testPathIgnorePatterns: ['/node_modules/', '/playwrightTests/', '/test-results/', 'playwright-report'],
-      modulePathIgnorePatterns: ['**/*.spec.js'], 
+      modulePathIgnorePatterns: ['<rootdir>/playwrightTests/**/*.spec.js'], 
 };
 
 module.exports = config;
