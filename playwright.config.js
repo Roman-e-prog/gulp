@@ -12,6 +12,8 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 module.exports = defineConfig({
   testDir: './playwrightTests',
+  // Ignore build folder
+  testIgnore: '**/build/**', 
   /* Run tests in files in parallel */
   fullyParallel: true,
   // setTimeout
