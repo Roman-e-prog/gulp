@@ -4,3 +4,11 @@ node_modules
 /init.sql
 /pgadmin-data
 /db-data
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
