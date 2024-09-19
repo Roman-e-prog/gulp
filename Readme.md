@@ -131,7 +131,7 @@ nginx -t
 
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 3970a87b33af
 
-for tests with jest-cli
+for tests with jest-cli example
 const gulp = require('gulp');
 const jest = require('jest-cli');
 
@@ -299,7 +299,90 @@ Visit https://playwright.dev/docs/intro for more information. ✨
 
 Happy hacking! 🎭
 
-When I click on the test icon in the sidebar it opens we a plywright section at the bottom.
+When I click on the test icon in the sidebar it opens me a playwright section at the bottom,
+with different options that I can choose.
+
+
+So an additional possibility is npx playwright show-report //there I get an ip adress to an ui with more information
+also I can run npx playwright test --trace on and then again npx playwright show-report, the same happens only that I have a button that leads to the trace, what is helpful to see all staages my test have done and get detailed informations
+
+When I let the tests run in the show browsers mode it takes my default the first browser enabled in the playwright.config. THe is an arrow in the top of the test bar in vs-code I can click on and choose the browsers that should be openend and it opens then the tested page in all this browsers
+
+I can run a debug on a special test and line by npx playwright testfile.spec.ts: 10 --debug, debug opens the inspector and by defining the specFile and line it goes directl there.
+
+I can press newRecord, then it opens me a new testfile with ...recording, I can coose one or more browser, then open my project in another terminal, when I the navigate to this browser window, the test automatically set this url in page.goto and I can then click on the elements on the page and it writes me then the tests for that. I have then only to rename the testfile.
+
+Multiple Projects that depends on each other
+
+In the projects section of the playwright.config, I can define several projects by using objects.
+They need a name and a testMacht. But I can also define dependencies in an array and they are a depends_on, so when there are several projects I can tell on which other project this would depends. Also I can tell there in a use object: storageState: STORGE_STATE and then define this env variable at the top with a path.
+After this I can create a test file with the testMatch of the project that should run first, I can then set in the import of test an as <projectname>, so that I have a nicer structure. 
+I import then this STORAGE_STATE variable from the playwright.config and set at the bottom of this testFile an await page.context().storageState({path:STORAGE_STATE})
+I also have then have to create a testfile that fits to the testMatch of the project that should run after this first project.
+Also I can copy one of the ...devices directly into this project, so that it defines on which broowser this project should run.
+To ignore some projects I also can use testIgnore and set therein the projectname.
+
+with npx playwright test --project=<projectname> I can pick one of the test projects to let it run alone.
+Playwright Browsers
+
+I can install the browsers via vs-code when installing Playwright
+Sometimes it can go something wrong with installing the browsers via vs-code.
+Then playwright might show the error, that the browser cannot be found, or is not installed.
+To fix this I can clear the cache
+clear vs code cache
+Windows: Navigate to C:\Users\<YourUsername>\AppData\Roaming\Code\Cache and
+Clear editor and search history 
+
+C:\Users\<YourUsername>\AppData\Roaming\Code\CachedData. Delete the contents of these folders.
+and I can remove the ms-playwright folder
+and then run npx playwright install
+
+I can wright playwright in similar way to puppeteer using the browser I want to launch, example
+const { chromium, firefox, webkit } = require('playwright'); This is the immedeatly invoked function that runs as soon as it is created.
+
+(async () => {
+  const browser = await chromium.launch();  // Or 'firefox' or 'webkit'.
+  const page = await browser.newPage();
+  await page.goto('http://example.com');
+  // other actions...
+  await browser.close();
+})();
+Like puppeteer playwright is completly asynchronous, so that I use everytime an async and then await every step.
+Like in puppeteer I can also choose different devices, example:
+const { webkit, devices } = require('playwright');
+const iPhone = devices['iPhone 6'];
+
+(async () => {
+  const browser = await webkit.launch();
+  const context = await browser.newContext({
+    ...iPhone
+  });
+  const page = await context.newPage();
+  await page.goto('http://example.com');
+  // other actions...
+  await browser.close();
+})();
+
+Browser vs Context
+Browser definition:
+A browser instance represents the entire web browser application, such as Chrome, Firefox, or Safari.
+Context definition:
+ A browser context is an isolated environment within a browser instance. It allows to run multiple independent sessions within the same browser.
+ Creating a new context is faster and more resource-efficient than launching a new browser instance.
+
+const context = await browser.newContext();
+not forget to close:
+// Gracefully close up everything
+  await context.close();
+  await browser.close();
+
+the connection of a browser I can also test with browser.isConnected()
+
+in playwright we must set test infront of commands like beforeEach or describe
+
+fill = type, it fills an input
+
+for debugging is very nice the ui mode npx playwright --ui, in the ui there is a pick locator then gives me the best locator for each element on the page, so that I can copy it into the test. Next to the test I can run view and edit the test directly in vs-code.
 
 example workflow for playwright when running in development modus:
 
@@ -331,7 +414,6 @@ jobs:
         run: |
           if [ "$NODE_ENV" == "development" ]; then
             npx playwright test
-          fi
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -339,7 +421,4 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-clear vs code cache
-Windows: Navigate to C:\Users\<YourUsername>\AppData\Roaming\Code\Cache and C:\Users\<YourUsername>\AppData\Roaming\Code\CachedData. Delete the contents of these folders.
 
-Clear editor and search history
